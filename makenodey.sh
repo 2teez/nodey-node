@@ -80,6 +80,7 @@ while getopts "${optionstring}" opt; do
             npm init -y > /dev/null
             perl -pe 's/main\": \"index.js\"/main\": \"app.js\"/;s/type\": \"commonjs\"/type\": \"module\"/' "package.json" > "package.json.tmp"
             mv "package.json.tmp" "package.json"
+            npm pkg set type=module
             echo "${NODE_FILE}" > "app.js"
             # run the project
             node "app.js"
