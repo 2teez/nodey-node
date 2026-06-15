@@ -47,9 +47,23 @@ while getopts "${optionstring}" opt; do
         g)
             filename="${OPTARG}"
             echo "Generating generic Node.js project: ${filename}"
+            if [[ -e "${filename}" ]]; then
+                echo "Directory already exists: ${filename}"
+                while read -r -p "Do you want to overwrite it? (y/n) " ans; do
+                    echo
+                    if [[ $ans =~ ^[Yy]$ ]]; then
+                        rm -rf "${filename}"
+                        break
+                    else
+                        exit 1
+                    fi
+                done
+            fi
             mkdir -p "${filename}"
             cd "${filename}" || exit
             npm init -y > /dev/null
+            perl -pe 's/main\": \"index.js\"/main\": \"app.js\"/;s/type\": \"commonjs\"/type\": \"module\"/' "package.json" > "package.json.tmp"
+            mv "package.json.tmp" "package.json"
             echo "${NODE_FILE}" > "app.js"
             # run the project
             node "app.js"
