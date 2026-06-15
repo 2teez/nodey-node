@@ -11,6 +11,7 @@ function help {
     echo "Usage: $0 -<option> <project_name>"
     echo ""
     echo "Options:"
+    echo "  -c  Change the extension of the file"
     echo "  -d  Delete the file or project"
     echo "  -h  Display this help message"
     echo "  -g  Generate a generic Node.js project"
@@ -30,10 +31,22 @@ if [[ $# -ne 2 ]]; then
     exit 1
 fi
 
-optionstring="d:g:r:o:h"
+optionstring="c:d:g:r:o:h"
 
 while getopts "${optionstring}" opt; do
     case $opt in
+        c) filename="${OPTARG}"
+            echo "Changing extension of ${filename}"
+            while read -r -p "Enter the new extension: " ext; do
+                if [[ -z "${filename}" ]]; then
+                    echo "Filename is empty"
+                    continue
+                else
+                    mv "${filename}" "${filename}.${ext}"
+                    exit 0
+                fi
+            done
+        ;;
         d) filename="${OPTARG}"
             while read -r -p "Are you sure you want to delete ${filename}? (y/n) " ans; do
                 echo
@@ -67,7 +80,7 @@ while getopts "${optionstring}" opt; do
             mv "package.json.tmp" "package.json"
             echo "${NODE_FILE}" > "app.js"
             # run the project
-            "${0}" -r "${filename}"
+            node "app.js"
             ;;
         h) help;;
         o)
