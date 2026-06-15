@@ -2,7 +2,7 @@
 
 import { appendFile } from "node:fs";
 import { userInfo } from "node:os";
-import { Age } from "./notes.js";
+import { Age, addNote, add } from "./notes.js";
 
 const username = userInfo().username;
 
@@ -15,3 +15,7 @@ appendFile(
     }
   },
 );
+
+addNote();
+const result = add(3, 5);
+console.log(`Result: ${result}`);
