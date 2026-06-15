@@ -9,5 +9,19 @@ import _ from "lodash";
 console.log(_.isString(true));
 console.log(_.isString("java"));
 //
-const filtered = _.uniq(["java", 1, "java", 2, 3, 2, 4, 3, 5]);
+const filtered = _.uniq([
+  "java",
+  1,
+  "java",
+  2,
+  3,
+  2,
+  4,
+  3,
+  5,
+  6,
+  3,
+  "jquery",
+  4,
+]);
 console.log(filtered);
