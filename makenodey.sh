@@ -11,8 +11,8 @@ function help {
     echo "Usage: $0 -<option> <project_name>"
     echo ""
     echo "Options:"
-    echo "  -d, --delete    delete the file or project"
-    echo "  -h, --help      Display this help message"
+    echo "  -d delete the file or project"
+    echo "  -h Display this help message"
     echo "  -g, --generic   generate a generic Node.js project"
     echo ""
 }
@@ -30,9 +30,24 @@ optionstring="d:g:h"
 while getopts "${optionstring}" opt; do
     case $opt in
         d) filename="${OPTARG}"
-
+            while read -r -p "Are you sure you want to delete ${filename}? (y/n) " ans; do
+                echo
+                if [[ $ans =~ ^[Yy]$ ]]; then
+                    rm -rf "${filename}"
+                    exit 0
+                else
+                    exit 1
+                fi
+            done
         ;;
-        g) ;;
+        g)
+            filename="${OPTARG}"
+            echo "Generating generic Node.js project: ${filename}"
+            mkdir -p "${filename}"
+            cd "${filename}" || exit
+            npm init -y
+            echo "${NODE_FILE}" > "app.js"
+            ;;
         h) help;;
         \?) help;;
     esac
