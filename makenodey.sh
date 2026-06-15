@@ -11,21 +11,25 @@ function help {
     echo "Usage: $0 -<option> <project_name>"
     echo ""
     echo "Options:"
-    echo "  -d delete the file or project"
-    echo "  -h Display this help message"
-    echo "  -g, --generic   generate a generic Node.js project"
+    echo "  -d  Delete the file or project"
+    echo "  -h  Display this help message"
+    echo "  -g  Generate a generic Node.js project"
+    echo "  -r  Run the project"
     echo ""
 }
 
-NODE_FILE="
-\"use strict\";
+NODE_FILE="\"use strict\";
 
 console.log(\"Hello, World!\");
 "
 
-echo "OPTIONS: ${1}"
+# Parse cli options
+if [[ $# -ne 2 ]]; then
+    help
+    exit 1
+fi
 
-optionstring="d:g:h"
+optionstring="d:g:r:h"
 
 while getopts "${optionstring}" opt; do
     case $opt in
@@ -45,10 +49,17 @@ while getopts "${optionstring}" opt; do
             echo "Generating generic Node.js project: ${filename}"
             mkdir -p "${filename}"
             cd "${filename}" || exit
-            npm init -y
+            npm init -y > /dev/null
             echo "${NODE_FILE}" > "app.js"
+            # run the project
+            node "app.js"
             ;;
         h) help;;
+        r) filename="${OPTARG}"
+            ! [[ -e "${filename}" ]] && { echo "File not found: ${filename}"; exit 1; }
+            echo "Running project: ${filename}"
+            node "${filename}/app.js"
+            ;;
         \?) help;;
     esac
 done
