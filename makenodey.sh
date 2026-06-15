@@ -57,8 +57,9 @@ while getopts "${optionstring}" opt; do
         h) help;;
         r) filename="${OPTARG}"
             ! [[ -e "${filename}" ]] && { echo "File not found: ${filename}"; exit 1; }
-            echo "Running project: ${filename}"
-            node "${filename}/app.js"
+            cd "${filename}" || exit
+            echo "Running project: app.js"
+            node "app.js"
             ;;
         \?) help;;
     esac
