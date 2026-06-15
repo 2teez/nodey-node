@@ -67,7 +67,7 @@ while getopts "${optionstring}" opt; do
             mv "package.json.tmp" "package.json"
             echo "${NODE_FILE}" > "app.js"
             # run the project
-            node "app.js"
+            "${0}" -r "${filename}"
             ;;
         h) help;;
         o)
@@ -78,9 +78,17 @@ while getopts "${optionstring}" opt; do
             ;;
         r) filename="${OPTARG}"
             ! [[ -e "${filename}" ]] && { echo "File not found: ${filename}"; exit 1; }
-            cd "${filename}" || exit
-            echo "Running project: app.js"
-            node "app.js"
+            if [[ -f "${filename}" ]]; then
+                echo "Running standalone js file: ${filename}"
+                file_extension="${filename##*.}"
+                [[ -z "${file_extension}" ]] && file_extension="js"
+                filename="${filename%.*}.${file_extension}"
+                node "${filename}"
+            else
+                cd "${filename}" || exit
+                echo "Running project: app.js"
+                node "app.js"
+            fi
             ;;
         \?) help;;
     esac
