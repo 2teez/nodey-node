@@ -15,6 +15,7 @@ function help {
     echo "  -h  Display this help message"
     echo "  -g  Generate a generic Node.js project"
     echo "  -r  Run the project"
+    echo "  -o  Generate a standalone js file"
     echo ""
 }
 
@@ -29,7 +30,7 @@ if [[ $# -ne 2 ]]; then
     exit 1
 fi
 
-optionstring="d:g:r:h"
+optionstring="d:g:r:o:h"
 
 while getopts "${optionstring}" opt; do
     case $opt in
@@ -69,6 +70,12 @@ while getopts "${optionstring}" opt; do
             node "app.js"
             ;;
         h) help;;
+        o)
+            filename="${OPTARG}"
+            echo "Generating standalone js file: ${filename}"
+            echo "${NODE_FILE}" > "${filename}.js"
+            node "${filename}.js"
+            ;;
         r) filename="${OPTARG}"
             ! [[ -e "${filename}" ]] && { echo "File not found: ${filename}"; exit 1; }
             cd "${filename}" || exit
