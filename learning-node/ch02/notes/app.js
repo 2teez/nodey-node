@@ -2,22 +2,23 @@
 
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import {} from "./notes.js";
+import { getAll, getNote, addNote, removeNote } from "./notes.js";
 
 let argv = yargs(hideBin(process.argv)).argv;
-let command = process.argv[2];
+// let command = process.argv[2];
+let command = argv._[0];
 
-console.log("Command:", process.argv);
+console.log("Command:", argv);
 console.log(argv);
 
 if (command === "add") {
-  console.log(`Adding note`);
+  addNote(argv.title, argv.body);
 } else if (command === "list") {
-  console.log(`Listing notes`);
+  getAll();
 } else if (command === "read") {
-  console.log(`Reading note`);
+  getNote(argv.title);
 } else if (command === "remove") {
-  console.log(`Removing note`);
+  removeNote(argv.title);
 } else {
   console.log(`Invalid command`);
 }
