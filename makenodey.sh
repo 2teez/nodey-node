@@ -37,12 +37,14 @@ while getopts "${optionstring}" opt; do
     case $opt in
         c) filename="${OPTARG}"
             echo "Changing extension of ${filename}"
+            new_filename="${filename%.*}"
+            extension="${filename##*.}"
             while read -r -p "Enter the new extension: " ext; do
-                if [[ -z "${filename}" ]]; then
+                if [[ "${new_filename}" == "${extension}" ]] || [[ "${ext}" == "" ]]; then
                     echo "Filename is empty"
                     continue
                 else
-                    mv "${filename}" "${filename}.${ext}"
+                    mv "${filename}" "${new_filename}.${ext}"
                     exit 0
                 fi
             done
