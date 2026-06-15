@@ -20,7 +20,7 @@ function help {
 
 NODE_FILE="\"use strict\";
 
-console.log(\"Hello, World!\");
+console.log(\"Starts Here!\");
 "
 
 # Parse cli options
