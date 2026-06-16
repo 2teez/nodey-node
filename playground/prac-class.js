@@ -46,3 +46,27 @@ snake.walks(0);
 
 const man = new Animal("man", "talks..");
 man.walks(2);
+
+class Employee {
+  constructor(firstName, lastName, numberOfYears) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.numberOfYears = numberOfYears;
+  }
+}
+
+const employee = new Employee("John", "Doe", 5);
+const employee2 = new Employee("Jane", "Doe", 3);
+
+const ama = [employee, employee2];
+
+Employee.prototype.getEmployeeDetails = function () {
+  return `${this.firstName} ${this.lastName} has been working for ${this.numberOfYears} years.`;
+};
+
+for (const employee of ama) {
+  console.log(employee.getEmployeeDetails());
+}
+
+// using forEach
+ama.forEach((employee) => console.log(employee.getEmployeeDetails()));
