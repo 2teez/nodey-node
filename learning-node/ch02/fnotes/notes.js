@@ -9,25 +9,39 @@ export const addNote = (title, body) => {
     body,
   };
 
+  if (!title?.trim() || !body?.trim()) {
+    console.log("Title and body must not be empty");
+  }
+
   if (notes.length === 0) {
     notes.push(note);
-    writeFileSync("note-data.json", JSON.stringify(notes));
-  } else if (notesDuplicates(notes, note.title)) {
+    writeFileSync("note-data.json", JSON.stringify(notes, null, 2));
+  } else if (removeNotesDuplicates(notes, note.title)) {
     notes.push(note);
-    writeFileSync("note-data.json", JSON.stringify(notes));
+    writeFileSync("note-data.json", JSON.stringify(notes, null, 2));
   } else {
     console.log("Note already exists");
   }
-};
-
-const notesDuplicates = (notes, title) => {
-  return notes.find((note) => note.title === title) === undefined;
 };
 
 export const getAll = () => {
   fetchNotes().forEach((note) =>
     console.log(`\nTitle: ${note.title}\nBody: ${note.body}\n`),
   );
+};
+
+export const removeNote = (title) => {
+  const notes = fetchNotes();
+  if (notes.length === 0) {
+    console.log("Empty notes list");
+    return;
+  }
+  const filteredNotes = notes.filter((note) => note.title !== title);
+  if (notes.length !== filteredNotes.length) {
+    writeFileSync("note-data.json", JSON.stringify(filteredNotes, null, 2));
+  } else {
+    console.log("Note not found");
+  }
 };
 
 const fetchNotes = () => {
@@ -37,4 +51,8 @@ const fetchNotes = () => {
   } catch (error) {
     return [];
   }
+};
+
+const removeNotesDuplicates = (notes, title) => {
+  return notes.find((note) => note.title === title) === undefined;
 };
