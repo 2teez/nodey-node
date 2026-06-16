@@ -15,3 +15,34 @@ class Person {
 
 const person = new Person("java", "36");
 person.greet();
+
+class Animal {
+  constructor(name, sound) {
+    this.name = name;
+    this.sound = sound;
+  }
+
+  makeSound() {
+    console.log(`${this.name} says ${this.sound}.`);
+  }
+}
+
+const dog = new Animal("dog", "woof");
+dog.makeSound();
+
+const snake = new Animal("snake", "hiss");
+snake.makeSound();
+
+Animal.prototype.walks = function (numberOfLegs = 4) {
+  if (numberOfLegs === 0) {
+    console.log(`${this.name} crawls.`);
+  } else {
+    console.log(`${this.name} walks on ${numberOfLegs} legs.`);
+  }
+};
+
+dog.walks();
+snake.walks(0);
+
+const man = new Animal("man", "talks..");
+man.walks(2);
