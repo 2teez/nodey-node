@@ -9,6 +9,13 @@ const argv = yargs(hideBin(process.argv))
     title: { describe: "Title of note", demand: true, alias: "t" },
     body: { describe: "Body of note", demand: true, alias: "b" },
   })
+  .command("list", "List all Notes")
+  .command("read", "Read a Note", {
+    title: { describe: "Title of note", demand: true, alias: "t" },
+  })
+  .command("remove", "Remove a Note", {
+    title: { describe: "Title of note", demand: true, alias: "t" },
+  })
   .help().argv;
 const command = argv._[0];
 
