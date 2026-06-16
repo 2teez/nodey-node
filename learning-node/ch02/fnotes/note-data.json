@@ -1,1 +1,19 @@
-[{"title":"bread winner","body":"bread is all you have got"},{"title":"javascript","body":"rules the web"}]
+[
+  {
+    "title": "java",
+    "body": "run everywhere"
+  },
+  {
+    "title": "javascript",
+    "body": "rules the web"
+  },
+  {
+    "title": "rust",
+    "body": "new kid on the block"
+  },
+  {
+    "title": "odin",
+    "body": "only to whoms is worthy can hold it.."
+  },
+  {}
+]
