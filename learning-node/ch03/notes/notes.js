@@ -11,6 +11,7 @@ export const addNote = (title, body) => {
 
   if (!title?.trim() || !body?.trim()) {
     console.log("Title and body must not be empty");
+    return;
   }
 
   if (notes.length === 0) {
@@ -25,9 +26,7 @@ export const addNote = (title, body) => {
 };
 
 export const getAll = () => {
-  fetchNotes().forEach((note) =>
-    console.log(`\nTitle: ${note.title}\nBody: ${note.body}\n`),
-  );
+  fetchNotes().forEach((note) => logNote(note.title, note.body));
 };
 
 export const removeNote = (title) => {
@@ -52,10 +51,15 @@ export const getNote = (title) => {
   }
   const note = notes.find((note) => note.title === title);
   if (note) {
-    console.log(`\nTitle: ${note.title}\nBody: ${note.body}\n`);
+    logNote(note.title, note.body);
   } else {
     console.log("Note not found");
   }
+};
+
+export const logNote = (title, body) => {
+  console.log("---");
+  console.log(`\nTitle: ${title}\nBody: ${body}\n`);
 };
 
 const fetchNotes = () => {
