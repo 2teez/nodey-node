@@ -9,5 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "request": "^2.88.2",
+    "yargs": "^17.7.2"
+  }
 }
