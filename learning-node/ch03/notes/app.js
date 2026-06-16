@@ -2,9 +2,14 @@
 
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { addNote, getAll, removeNote, getNote } from "./notes.js";
+import { addNote, getAll, removeNote, getNote, logNote } from "./notes.js";
 
-const argv = yargs(hideBin(process.argv)).argv;
+const argv = yargs(hideBin(process.argv))
+  .command("add", "Add a new Note", {
+    title: { describe: "Title of note", demand: true, alias: "t" },
+    body: { describe: "Body of note", demand: true, alias: "b" },
+  })
+  .help().argv;
 const command = argv._[0];
 
 if (process.argv.length < 3) {
@@ -14,6 +19,8 @@ if (process.argv.length < 3) {
 
 if (command === "add") {
   addNote(argv.title, argv.body);
+  console.log("Note added successfully.");
+  logNote(argv.title, argv.body);
 } else if (command === "list") {
   getAll();
 } else if (command === "remove") {
