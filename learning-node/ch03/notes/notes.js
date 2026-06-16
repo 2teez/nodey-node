@@ -44,6 +44,20 @@ export const removeNote = (title) => {
   }
 };
 
+export const getNote = (title) => {
+  const notes = fetchNotes();
+  if (notes.length === 0) {
+    console.log("Empty notes list");
+    return;
+  }
+  const note = notes.find((note) => note.title === title);
+  if (note) {
+    console.log(`\nTitle: ${note.title}\nBody: ${note.body}\n`);
+  } else {
+    console.log("Note not found");
+  }
+};
+
 const fetchNotes = () => {
   try {
     const data = readFileSync("note-data.json");

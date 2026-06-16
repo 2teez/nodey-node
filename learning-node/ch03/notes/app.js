@@ -2,7 +2,7 @@
 
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { addNote, getAll, removeNote } from "./notes.js";
+import { addNote, getAll, removeNote, getNote } from "./notes.js";
 
 const argv = yargs(hideBin(process.argv)).argv;
 const command = argv._[0];
@@ -18,4 +18,6 @@ if (command === "add") {
   getAll();
 } else if (command === "remove") {
   removeNote(argv.title);
+} else if (command === "read") {
+  getNote(argv.title);
 }
