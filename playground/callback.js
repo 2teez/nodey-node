@@ -55,3 +55,17 @@ result = getGrade(95, judge);
 console.log(`You got a ${result} result`);
 result = getGrade(25, judge);
 console.log(`You got a ${result} result`);
+
+// exercise
+const greet = (fullname = []) => {
+  return `Hello, ${fullname.join(" ")}!`;
+};
+
+const greeter = (fullname, callback) => {
+  return callback(fullname);
+};
+
+let greeting = greeter(["John", "Doe"], greet);
+console.log(greeting);
+
+console.log(greeter("Java,Script".split(","), greet));
