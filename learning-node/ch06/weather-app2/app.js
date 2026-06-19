@@ -15,4 +15,10 @@ const argv = yargs
   .help()
   .alias("help", "-h").argv;
 
-gecode.gecodedAddress(argv.address);
+gecode.gecodedAddress(argv.address, (errorMessage, results) => {
+  if (errorMessage !== undefined) {
+    console.log(`${errorMessage}`);
+  } else {
+    console.log(JSON.stringify(results, null, 2));
+  }
+});

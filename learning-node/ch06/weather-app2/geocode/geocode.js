@@ -2,7 +2,7 @@
 
 const request = require("request");
 
-const gecodedAddress = (address) => {
+const gecodedAddress = (address, callback) => {
   const API_KEY = "ab45724cc15822eeff6cc675a219acb4";
   let encodedAddress = encodeURIComponent(address);
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodedAddress}&appid=${API_KEY}&units=metric`;
@@ -14,14 +14,17 @@ const gecodedAddress = (address) => {
     },
     (error, response, body) => {
       if (error) {
-        throw new Error(`HTTP Error: ${error}`);
+        callback(`HTTP: ${error}`, undefined);
+        return;
+      } else if (body.cod !== 200) {
+        callback(`${body.message}`, undefined);
+        return;
       }
-      // console.log(JSON.stringify(body, null, 2));
-      const Lat = body["coord"]["lat"];
-      const Lon = body["coord"]["lon"];
-      const name = body["name"];
-      console.log(`Name: ${name}`);
-      console.log(`Latitude: ${Lat}\nLongitude: ${Lon}`);
+      callback(undefined, {
+        name: body["name"],
+        latitude: body["coord"]["lat"],
+        longitude: body["coord"]["lon"],
+      });
     },
   );
 };
