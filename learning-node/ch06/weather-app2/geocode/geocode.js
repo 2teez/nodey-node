@@ -1,5 +1,7 @@
 "use strict";
 
+require("dotenv").config();
+
 const request = require("request");
 
 const gecodedAddress = (address, callback) => {
