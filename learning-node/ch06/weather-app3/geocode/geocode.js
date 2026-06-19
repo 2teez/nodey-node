@@ -1,9 +1,10 @@
 "use strict";
 
 const request = require("request");
+require("dotenv").config();
 
 const gecodedAddress = (address, callback) => {
-  const API_KEY = "ab45724cc15822eeff6cc675a219acb4";
+  const API_KEY = process.env.OPENWEATHER_KEY;
   let encodedAddress = encodeURIComponent(address);
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodedAddress}&appid=${API_KEY}&units=metric`;
 

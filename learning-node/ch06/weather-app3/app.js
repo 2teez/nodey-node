@@ -20,16 +20,15 @@ gecode.gecodedAddress(argv.address, (errorMessage, results) => {
   if (errorMessage !== undefined) {
     console.log(`${errorMessage}`);
   } else {
-    console.log(JSON.stringify(results, null, 2));
+    const { name: name, latitude: latitude, longitude: longitude } = results;
+    weather.getWeather(latitude, longitude, (err, msg) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log(
+        `Name: ${name}\nIt's currently ${msg.temperature}. It feels like ${msg.apparentTemperature}\n`,
+      );
+    });
   }
-});
-
-weather.getWeather(...argv.address.split(","), (err, msg) => {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  console.log(
-    `Temperature: ${msg.temperature}\nApparent Temperature: ${msg.apparentTemperature}\n`,
-  );
 });
