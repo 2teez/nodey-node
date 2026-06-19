@@ -1,9 +1,10 @@
 "use strict";
 
 const request = require("request");
+require("dotenv").config();
 
 const getWeather = (lat, lon, callback) => {
-  const API_KEY = "ab45724cc15822eeff6cc675a219acb4";
+  const API_KEY = process.env.OPENWEATHER_KEY;
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
 
   request(
