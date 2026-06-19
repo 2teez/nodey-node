@@ -17,12 +17,12 @@ const gecodedAddress = (address) => {
       if (error) {
         throw new Error(`HTTP Error: ${error}`);
       }
-      console.log(JSON.stringify(body, null, 2));
-      /*const Lat = body["coord"]["lat"];
+      //console.log(JSON.stringify(body, null, 2));
+      const Lat = body.coord.lat;
       const Lon = body.coord.lon;
       const name = body.name;
       console.log(`Name: ${name}`);
-      console.log(`Latitude: ${Lat}\nLongitude: ${Lon}`);*/
+      console.log(`Latitude: ${Lat}\nLongitude: ${Lon}`);
     },
   );
 };
