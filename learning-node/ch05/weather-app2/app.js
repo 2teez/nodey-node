@@ -1,9 +1,9 @@
 "use strict";
 
-import yargs, { demand } from "yargs";
+import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-const args = yargs(hideBin(process.argv))
+const argv = yargs(hideBin(process.argv))
   .options({
     address: {
       describe: "Address looking for.",
@@ -14,3 +14,23 @@ const args = yargs(hideBin(process.argv))
   })
   .help()
   .alias("help", "h").argv;
+
+const API_KEY = "ab45724cc15822eeff6cc675a219acb4";
+const encodedAddress = encodeURIComponent(argv.address);
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodedAddress}&appid=${API_KEY}&units=metric`;
+
+const fetchWeather = async () => {
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data);
+  } catch (err) {
+    console.log(`Error handling waether: ${err.message}`);
+  }
+};
+
+fetchWeather();
