@@ -1,0 +1,34 @@
+"use strict";
+
+const request = require("request");
+
+const gecodedAddress = (address, callback) => {
+  const API_KEY = "ab45724cc15822eeff6cc675a219acb4";
+  let encodedAddress = encodeURIComponent(address);
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodedAddress}&appid=${API_KEY}&units=metric`;
+
+  request(
+    {
+      url: url,
+      json: true,
+    },
+    (error, response, body) => {
+      if (error) {
+        callback(`HTTP: ${error}`, undefined);
+        return;
+      } else if (body.cod !== 200) {
+        callback(`${body.message}`, undefined);
+        return;
+      }
+      callback(undefined, {
+        name: body["name"],
+        latitude: body["coord"]["lat"],
+        longitude: body["coord"]["lon"],
+      });
+    },
+  );
+};
+
+module.exports = {
+  gecodedAddress: gecodedAddress,
+};
