@@ -15,3 +15,8 @@ npm like so:
 `npm install dotenv --save`
 
 then include the .env into your .gitignore file
+
+3. >
+
+Modify the js file to either `require("dotenv").config()` on commonjs Module
+OR `import "dotenv/config"` on ESModule

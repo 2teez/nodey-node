@@ -1,5 +1,7 @@
 "use strict";
 
+require("dotenv").config();
+
 const yargs = require("yargs");
 //import { hideBin } from "yargs/helpers"; // for ES MOdule in js
 const request = require("request");
@@ -17,7 +19,7 @@ const argv = yargs
   .alias("help", "h").argv;
 //console.log(JSON.stringify(argv, null, 2));
 //
-const API_KEY = "ab45724cc15822eeff6cc675a219acb4";
+const API_KEY = process.env.OPENWEATHER_KEY;
 //const url = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${API_KEY}&units=metric`;
 let encodedAddress = encodeURIComponent(argv.address);
 request(
