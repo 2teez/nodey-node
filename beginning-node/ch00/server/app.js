@@ -6,7 +6,7 @@ const server = http.createServer((request, response) => {
   console.log("request starting...");
 
   // showing header
-  console.log(request.headers());
+  console.log(request.headers);
 
   response.write("Hello, Client!\n");
   response.end();
