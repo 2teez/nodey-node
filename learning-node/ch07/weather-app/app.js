@@ -40,11 +40,3 @@ axios
     );
   })
   .catch((e) => console.log(e));
-
-/*
-const geocodeAddress = (address) => {
-  console.log(JSON.stringify(address, null, 2));
-};
-
-geocodeAddress(argv.address);
-*/
