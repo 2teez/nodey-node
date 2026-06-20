@@ -31,6 +31,10 @@ const addNumber = (a, b) => {
 addNumber(5, 7)
   .then((result) => {
     console.log(`Result: ${result}`);
+    return addNumber(result, 33);
+  })
+  .then((result) => {
+    console.log(`Result: ${result}`);
   })
   .catch((errMsg) => {
     console.log(errMsg);
