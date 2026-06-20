@@ -3,6 +3,7 @@
 import "dotenv/config";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+import axios from "axios";
 
 const argv = yargs(hideBin(process.argv))
   .options({
@@ -16,4 +17,34 @@ const argv = yargs(hideBin(process.argv))
   .help()
   .alias("help", "h").argv;
 
-console.log(argv.address);
+const API_KEY = process.env.OPENWEATHER_KEY;
+let encodedAddress = encodeURIComponent(argv.address);
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodedAddress}&appid=${API_KEY}&units=metric`;
+
+axios
+  .get(url)
+  .then((info) => {
+    if (info.data.cod !== 200) {
+      throw new Error("Unable to find that address.");
+    }
+    console.log(info.data);
+    return {
+      name: info.data.name,
+      temp: info.data.main.temp,
+      feels_like: info.data.main.feels_like,
+    };
+  })
+  .then((data) => {
+    console.log(
+      `${data.name} temperature ${data.temp}, but feels like ${data.feels_like}.`,
+    );
+  })
+  .catch((e) => console.log(e));
+
+/*
+const geocodeAddress = (address) => {
+  console.log(JSON.stringify(address, null, 2));
+};
+
+geocodeAddress(argv.address);
+*/
